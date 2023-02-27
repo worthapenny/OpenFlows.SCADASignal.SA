@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.3.13.3\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A5221D8C-3516-48EE-895D-870A103D3100}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>OpenFlows.SCADASignal.SA</RootNamespace>
+    <AssemblyName>OpenFlows.SCADASignal.SA</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\SCADASignal.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Haestad.Domain">
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.Domain.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Haestad.Domain.ModelingObjects, Version=10.4.0.30, Culture=neutral, PublicKeyToken=b4db808388021f6e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.Domain.ModelingObjects.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Haestad.Domain.ModelingObjects.Water, Version=10.4.0.30, Culture=neutral, PublicKeyToken=b4db808388021f6e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.Domain.ModelingObjects.Water.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Haestad.Framework">
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.Framework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Haestad.Framework.Windows.Forms">
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.Framework.Windows.Forms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Haestad.SCADA.Domain, Version=10.4.0.30, Culture=neutral, PublicKeyToken=b4db808388021f6e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Bentley\WaterCAD\Haestad.SCADA.Domain.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Haestad.SCADA.Domain.Application, Version=10.4.0.30, Culture=neutral, PublicKeyToken=b4db808388021f6e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.SCADA.Domain.Application.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Haestad.SCADA.Domain.HOPC, Version=10.4.0.30, Culture=neutral, PublicKeyToken=b4db808388021f6e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.SCADA.Domain.HOPC.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Haestad.SCADA.Domain.Support, Version=10.4.0.30, Culture=neutral, PublicKeyToken=b4db808388021f6e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.SCADA.Domain.Support.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Haestad.SCADA.Forms, Version=10.4.0.30, Culture=neutral, PublicKeyToken=b4db808388021f6e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.SCADA.Forms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Haestad.SQLite, Version=10.4.0.30, Culture=neutral, PublicKeyToken=b4db808388021f6e, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.SQLite.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Haestad.Support">
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.Support.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Haestad.Water.Forms">
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.Water.Forms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog">
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Console">
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Serilog.Sinks.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Debug">
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Serilog.Sinks.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File">
+      <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Serilog.Sinks.File.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Application\SCADASignalApplicationDescription.cs" />
+    <Compile Include="Application\SCADASignalApplicationModel.cs" />
+    <Compile Include="AppManager.cs" />
+    <Compile Include="ComponentsModel\Database\SignalsImportFromDatabaseControlModel.cs" />
+    <Compile Include="ComponentsModel\Shared\PreviewSCADADataControlModel.cs" />
+    <Compile Include="ComponentsModel\Shared\SignalsImportFromFileControlModel.cs" />
+    <Compile Include="ComponentsModel\Database\DatabaseConnectionConfigControlModel.cs" />
+    <Compile Include="ComponentsModel\Database\DatabaseConnectionControlModel.cs" />
+    <Compile Include="ComponentsModel\OPC\HOPCConnectionConfigControlModel.cs" />
+    <Compile Include="ComponentsModel\Shared\SignalTransformationControlModel.cs" />
+    <Compile Include="ComponentsModel\Shared\SignalUnitControlModel.cs" />
+    <Compile Include="ComponentsModel\DataSourceConnectionControlModel.cs" />
+    <Compile Include="ComponentsModel\OPC\HOPCSourceControlModel.cs" />
+    <Compile Include="ComponentsModel\OpenWaterDatabaseModelControlModel.cs" />
+    <Compile Include="Components\Database\SignalsImportFromDatabaseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Database\SignalsImportFromDatabaseControl.Designer.cs">
+      <DependentUpon>SignalsImportFromDatabaseControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Shared\SignalsImportFromFileControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Shared\SignalsImportFromFileControl.Designer.cs">
+      <DependentUpon>SignalsImportFromFileControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Database\DatabaseConnectionConfigControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Database\DatabaseConnectionConfigControl.Designer.cs">
+      <DependentUpon>DatabaseConnectionConfigControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Database\DatabaseConnectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Database\DatabaseConnectionControl.Designer.cs">
+      <DependentUpon>DatabaseConnectionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\OPC\HOPCConnectionConfigControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\OPC\HOPCConnectionConfigControl.Designer.cs">
+      <DependentUpon>HOPCConnectionConfigControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Shared\SignalTransformationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Shared\SignalTransformationControl.Designer.cs">
+      <DependentUpon>SignalTransformationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Shared\SignalUnitControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Shared\SignalUnitControl.Designer.cs">
+      <DependentUpon>SignalUnitControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\DataSourceConnectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\DataSourceConnectionControl.Designer.cs">
+      <DependentUpon>DataSourceConnectionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\OPC\HOPCSourceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\OPC\HOPCSourceControl.Designer.cs">
+      <DependentUpon>HOPCSourceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Support\InputComboBoxField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Support\InputComboBoxField.Designer.cs">
+      <DependentUpon>InputComboBoxField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Support\InputField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Support\InputField.Designer.cs">
+      <DependentUpon>InputField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\OpenWaterDatabaseModelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\OpenWaterDatabaseModelControl.Designer.cs">
+      <DependentUpon>OpenWaterDatabaseModelControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Shared\PreviewSCADADataControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Shared\PreviewSCADADataControl.Designer.cs">
+      <DependentUpon>PreviewSCADADataControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Support\Separator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Support\Separator.Designer.cs">
+      <DependentUpon>Separator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\ControlExtensions.cs" />
+    <Compile Include="FormModel\SCADASignalsParentFormModel.cs" />
+    <Compile Include="Forms\SCADASignalsParentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SCADASignalsParentForm.Designer.cs">
+      <DependentUpon>SCADASignalsParentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Library\LogLibrary.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Support\IO\SCADASignalInfo.cs" />
+    <Compile Include="Support\Logging\Logging.cs" />
+    <EmbeddedResource Include="Components\Database\SignalsImportFromDatabaseControl.resx">
+      <DependentUpon>SignalsImportFromDatabaseControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Shared\SignalsImportFromFileControl.resx">
+      <DependentUpon>SignalsImportFromFileControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Database\DatabaseConnectionConfigControl.resx">
+      <DependentUpon>DatabaseConnectionConfigControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Database\DatabaseConnectionControl.resx">
+      <DependentUpon>DatabaseConnectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\OPC\HOPCConnectionConfigControl.resx">
+      <DependentUpon>HOPCConnectionConfigControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Shared\SignalTransformationControl.resx">
+      <DependentUpon>SignalTransformationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Shared\SignalUnitControl.resx">
+      <DependentUpon>SignalUnitControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\DataSourceConnectionControl.resx">
+      <DependentUpon>DataSourceConnectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\OPC\HOPCSourceControl.resx">
+      <DependentUpon>HOPCSourceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Support\InputComboBoxField.resx">
+      <DependentUpon>InputComboBoxField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Support\InputField.resx">
+      <DependentUpon>InputField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\OpenWaterDatabaseModelControl.resx">
+      <DependentUpon>OpenWaterDatabaseModelControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Shared\PreviewSCADADataControl.resx">
+      <DependentUpon>PreviewSCADADataControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Support\Separator.resx">
+      <DependentUpon>Separator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SCADASignalsParentForm.resx">
+      <DependentUpon>SCADASignalsParentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="_setup.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\SCADASignal.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.3\build\NUnit.props'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+cd $(ProjectDir)
+call _setup.bat "$(TargetDir)" $(PlatformName)</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>10.0</LangVersion>
+    <NullableReferenceTypes>true</NullableReferenceTypes>
+  </PropertyGroup>
+</Project>
