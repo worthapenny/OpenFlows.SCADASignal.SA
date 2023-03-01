@@ -34,7 +34,7 @@ public partial class DatabaseConnectionConfigControl : HaestadUserControl
     #region Private Methods
     private void TestConnection()
     {
-        var testResult = DatabaseConnectionConfigControlModel.TestConnectionResult();
+        var testResult = DatabaseConnectionConfigControlModel.TestConnection();
         if (testResult == Haestad.SCADA.Domain.TestConnectionResult.ConnectionOK)
         {
             var message = $"Connection to '{DatabaseConnectionConfigControlModel.DataSourceElement.Label}' is succeeded";

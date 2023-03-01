@@ -10,7 +10,7 @@ public class HOPCConnectionConfigControlModel : HaestadUserControlModel
 {
     #region Constructor
     public HOPCConnectionConfigControlModel(IApplicationModel appModel)
-        :base("HOPCConnectionConfigControlModel", appModel)
+        : base("HOPCConnectionConfigControlModel", appModel)
     {
         HOPCSourceControlModel = new HOPCSourceControlModel(ApplicationModel);
         SignalUnitControlModel = new SignalUnitControlModel(ApplicationModel);

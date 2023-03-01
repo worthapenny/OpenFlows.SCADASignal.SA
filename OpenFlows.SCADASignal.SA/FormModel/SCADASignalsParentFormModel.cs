@@ -7,7 +7,7 @@ public class SCADASignalsParentFormModel : HaestadFormModel
 {
     #region Constructor
     public SCADASignalsParentFormModel(IApplicationModel appModel)
-        :base("SCADASignalsParentFormModel", appModel)
+        : base("SCADASignalsParentFormModel", appModel)
     {
         OpenWaterDatabaseModelControlModel = new OpenWaterDatabaseModelControlModel(appModel);
         DataSourceConnectionControlModel = new DataSourceConnectionControlModel(appModel);
@@ -15,7 +15,7 @@ public class SCADASignalsParentFormModel : HaestadFormModel
     #endregion
 
     #region Public Properties
-    public OpenWaterDatabaseModelControlModel OpenWaterDatabaseModelControlModel { get;  }
+    public OpenWaterDatabaseModelControlModel OpenWaterDatabaseModelControlModel { get; }
     public DataSourceConnectionControlModel DataSourceConnectionControlModel { get; }
 
     #endregion

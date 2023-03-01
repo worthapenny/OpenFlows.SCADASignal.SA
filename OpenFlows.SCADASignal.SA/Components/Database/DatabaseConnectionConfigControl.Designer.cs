@@ -67,6 +67,7 @@ namespace OpenFlows.SCADASignal.SA.Components.Database
             this.buttonAddUpdate.TabIndex = 16;
             this.buttonAddUpdate.Text = "Add / Update";
             this.buttonAddUpdate.UseVisualStyleBackColor = true;
+            this.buttonAddUpdate.Visible = false;
             // 
             // tabControlDatabase
             // 

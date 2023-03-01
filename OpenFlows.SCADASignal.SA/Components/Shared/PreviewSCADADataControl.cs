@@ -1,5 +1,4 @@
-﻿using Haestad.Domain;
-using Haestad.Framework.Windows.Forms.Components;
+﻿using Haestad.Framework.Windows.Forms.Components;
 using Haestad.Framework.Windows.Forms.Resources;
 using Haestad.Support.Support;
 using OpenFlows.SCADASignal.SA.ComponentsModel.Shared;
@@ -22,6 +21,7 @@ public partial class PreviewSCADADataControl : HaestadUserControl
     #region Overridden Methods
     protected override void InitializeEvents()
     {
+        this.toolStripButtonSelectAll.Click += (s, e) => SelectAllNodes();
         this.toolStripButtonDelete.Click += (s, e) => DeleteSelectedNodes();
         this.toolStripButtonReload.Click += (s, e) => LoadTags();
         this.treeViewTags.AfterSelect += TagsTreeNodeSelected;
@@ -35,12 +35,12 @@ public partial class PreviewSCADADataControl : HaestadUserControl
         base.InitializeEvents();
     }
 
-   
+
     protected override void InitializeText()
     {
         this.dateTimePickerFrom.Value = PreviewSCADADataControlModel.StartDateTime;
         this.dateTimePickerTo.Value = PreviewSCADADataControlModel.EndDateTime;
-               
+
 
         base.InitializeText();
     }
@@ -51,6 +51,7 @@ public partial class PreviewSCADADataControl : HaestadUserControl
         this.treeViewTags.ImageList.Images.Add((Icon)GraphicResourceManager.Current[StandardGraphicResourceNames.SCADASignalDerived]);
         this.treeViewTags.ImageList.Images.Add((Icon)GraphicResourceManager.Current[StandardGraphicResourceNames.SelectAll]);
 
+        this.toolStripButtonSelectAll.Image = ((Icon)GraphicResourceManager.Current[StandardGraphicResourceNames.CheckAll]).ToBitmap();
         this.toolStripButtonDelete.Image = ((Icon)GraphicResourceManager.Current[StandardGraphicResourceNames.Delete]).ToBitmap();
         this.toolStripButtonReload.Image = ((Icon)GraphicResourceManager.Current[StandardGraphicResourceNames.Refresh]).ToBitmap();
 
@@ -77,6 +78,11 @@ public partial class PreviewSCADADataControl : HaestadUserControl
     #endregion
 
     #region Private Methods
+    private void SelectAllNodes()
+    {
+        foreach (TreeNode node in this.treeViewTags.Nodes)
+            node.Checked = true;
+    }
     private void DeleteSelectedNodes()
     {
         foreach (TreeNode node in this.treeViewTags.Nodes)
@@ -121,8 +127,8 @@ public partial class PreviewSCADADataControl : HaestadUserControl
 
             message += $"\n\n{ex.StackTrace}";
             MessageBox.Show(this, message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }           
-        
+        }
+
     }
     #endregion
 

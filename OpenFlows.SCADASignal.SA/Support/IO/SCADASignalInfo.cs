@@ -8,14 +8,14 @@ public class SCADASignalInfo
 {
     #region Constructor
     public SCADASignalInfo()
-    {            
+    {
     }
     public SCADASignalInfo(string tag)
-        :this(tag, tag)
+        : this(tag, tag)
     {
     }
     public SCADASignalInfo(string tag, string label)
-        :this()
+        : this()
     {
         Tag = tag;
         Label = label;
@@ -26,7 +26,7 @@ public class SCADASignalInfo
     #region Public Methods
     public bool Validate()
     {
-        if(string.IsNullOrEmpty(Tag) && string.IsNullOrEmpty(Label))
+        if (string.IsNullOrEmpty(Tag) && string.IsNullOrEmpty(Label))
         {
             Log.Warning($"Both Tag and Label cannot be empty.");
             return false;
@@ -45,7 +45,7 @@ public class SCADASignalInfo
     public override string ToString()
     {
         return $"{Tag} | {Label} | {Formula}";
-    }        
+    }
     #endregion
 
     #region Public Properties

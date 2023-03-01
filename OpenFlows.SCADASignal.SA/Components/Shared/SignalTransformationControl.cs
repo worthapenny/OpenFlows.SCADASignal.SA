@@ -55,7 +55,7 @@ public partial class SignalTransformationControl : HaestadUserControl
     {
         this.inputComboBoxFieldPumpType.ComboBox.SelectedIndexChanged += (s, e) => EnablePumpTransformationControls();
         this.inputComboBoxFieldValveType.ComboBox.SelectedIndexChanged += (s, e) => EnableValveTransformationControls();
-        
+
         base.InitializeEvents();
     }
     protected override void InitializeVisually()

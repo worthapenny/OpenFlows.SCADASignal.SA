@@ -69,6 +69,8 @@
       <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.Domain.ModelingObjects.Water.dll</HintPath>
     </Reference>
     <Reference Include="Haestad.Framework, Version=10.4.0.30, Culture=neutral, PublicKeyToken=b4db808388021f6e" />
+    <Reference Include="Haestad.SCADA.Domain, Version=10.4.0.30, Culture=neutral, PublicKeyToken=b4db808388021f6e" />
+    <Reference Include="Haestad.SCADA.Domain.Application, Version=10.4.0.30, Culture=neutral, PublicKeyToken=b4db808388021f6e" />
     <Reference Include="Haestad.Support">
       <HintPath>C:\Program Files (x86)\Bentley\WaterGEMS\x64\Haestad.Support.dll</HintPath>
     </Reference>
@@ -91,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="_setup.bat" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenFlows.SCADASignal.SA\OpenFlows.SCADASignal.SA.csproj">
@@ -110,4 +113,9 @@
     <Error Condition="!Exists('..\packages\NUnit3TestAdapter.4.3.1\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.4.3.1\build\net35\NUnit3TestAdapter.props'))" />
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.2.2.10\build\net46\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.2.2.10\build\net46\MSTest.TestAdapter.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>
+cd $(ProjectDir)
+call _setup.bat "$(TargetDir)" $(PlatformName)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

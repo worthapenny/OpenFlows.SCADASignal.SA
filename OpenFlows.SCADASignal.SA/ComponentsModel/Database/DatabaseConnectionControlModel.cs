@@ -4,6 +4,8 @@ using Haestad.SCADA.Domain;
 using Haestad.SCADA.Domain.Application;
 using Haestad.Support.Support;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace OpenFlows.SCADASignal.SA.ComponentsModel.Database;
 
@@ -16,8 +18,50 @@ public class DatabaseConnectionControlModel : HaestadUserControlModel
     }
     #endregion
 
+    #region Overridden Methods
+    public override void Dispose()
+    {
+        _dataSources.ForEach(d => { d.Connection?.Close(); d.Connection.Dispose(); d.Dispose(); });
+
+        _dataSource?.Connection?.Close();
+        _dataSource?.Connection?.Dispose();
+        _dataSource?.Dispose();
+        base.Dispose();
+    }
+    #endregion
+
+    #region Public Methods
+    public DatabaseDataSource NewDatabaseDataSource(bool updateFields = true)
+    {
+        var dataSource = (DatabaseDataSource)ScadaFactory.NewDatabaseDataSource(
+                               scadaDataSourceType: DatabaseDataSourceType,
+                               databaseDataSourceFormat: SourceFormat,
+                               dataSourcePath: DataFilePath);
+
+        _dataSources.Add(dataSource);
+
+        if (updateFields)
+        {
+            if (!string.IsNullOrEmpty(TableName)) dataSource.TableName = TableName;
+            if (!string.IsNullOrEmpty(SignalColumnName)) dataSource.SignalNameField = SignalColumnName;
+            if (!string.IsNullOrEmpty(ValueColumnName)) dataSource.SignalValueField = ValueColumnName;
+            if (!string.IsNullOrEmpty(TimestampColumnName)) dataSource.SignalDateTimeField = TimestampColumnName;
+
+            dataSource.SourceFormat = SourceFormat;
+
+            if (File.Exists(DataFilePath))
+                dataSource.Connection.RebuildConnectionString();
+
+            //if (UseConnectionString && !string.IsNullOrEmpty(ConnectionString))
+            //    dataSource.Connection.ConnectionString = ConnectionString;
+        }
+
+        return dataSource;
+    }
+    #endregion
 
     #region Private Methods
+
     private bool ShouldUseConnectionString()
     {
         switch (DatabaseDataSourceType)
@@ -72,12 +116,18 @@ public class DatabaseConnectionControlModel : HaestadUserControlModel
     public DatabaseDataSourceType DatabaseDataSourceType
     {
         get => (DatabaseDataSourceType)SupportField(StandardFieldName.DatabaseDatasourceType).GetValue(DataSourceId);
-        set { SupportField(StandardFieldName.DatabaseDatasourceType).SetValue(DataSourceId, (int)value); UseConnectionString = ShouldUseConnectionString(); }
+        set { SupportField(StandardFieldName.DatabaseDatasourceType).SetValue(DataSourceId, (int)value); /*UseConnectionString = ShouldUseConnectionString();*/ }
     }
     public string DataFilePath
     {
         get => (string)SupportField(StandardFieldName.DatabaseType_DatasourcePath).GetValue(DataSourceId);
-        set => SupportField(StandardFieldName.DatabaseType_DatasourcePath).SetValue(DataSourceId, value);
+        set
+        {
+            SupportField(StandardFieldName.DatabaseType_DatasourcePath).SetValue(DataSourceId, value);
+            var newConnection = NewDatabaseDataSource(false).Connection;
+            ConnectionString = newConnection.ConnectionString;
+            newConnection.Dispose();
+        }
     }
     public bool UseConnectionString
     {
@@ -188,40 +238,7 @@ public class DatabaseConnectionControlModel : HaestadUserControlModel
     public string SignalDataSQLQueryDefault => DatabaseDataSource.DefaultHistoricalSelectStatement;
     public string DateTimeRangeSQLQueryDefault => DatabaseDataSource.DefaultHistoricalDateTimeRangeSelectStatement;
 
-    public DatabaseDataSource DatabaseDataSource
-    {
-        get
-        {
-            if (_dataSource == null)
-            {
-                _dataSource = (DatabaseDataSource)ScadaFactory.NewDatabaseDataSource(
-                                scadaDataSourceType: DatabaseDataSourceType,
-                                databaseDataSourceFormat: SourceFormat,
-                                dataSourcePath: DataFilePath);
-
-                if (UseConnectionString)
-                    _dataSource.Connection.ConnectionString = ConnectionString;
-            }
-
-            return _dataSource;
-
-            //var _dataSource = (DatabaseDataSource)ScadaFactory.NewDatabaseDataSource(
-            //                scadaDataSourceType: DatabaseDataSourceType,
-            //                databaseDataSourceFormat: SourceFormat,
-            //                dataSourcePath: DataFilePath);
-            //_dataSource.TableName = TableName;
-            //_dataSource.SourceFormat = SourceFormat;
-            //_dataSource.SignalNameField = SignalColumnName;
-            //_dataSource.SignalValueField = ValueColumnName;
-            //_dataSource.SignalDateTimeField = TimestampColumnName;
-
-
-            //if (UseConnectionString)
-            //    _dataSource.Connection.ConnectionString = ConnectionString;
-
-            //return _dataSource;
-        }
-    }
+    public DatabaseDataSource DatabaseDataSource => _dataSource ??= NewDatabaseDataSource();
     #endregion
 
 
@@ -229,5 +246,6 @@ public class DatabaseConnectionControlModel : HaestadUserControlModel
 
     #region Private Field
     private DatabaseDataSource _dataSource;
+    private List<DatabaseDataSource> _dataSources = new List<DatabaseDataSource>();
     #endregion
 }

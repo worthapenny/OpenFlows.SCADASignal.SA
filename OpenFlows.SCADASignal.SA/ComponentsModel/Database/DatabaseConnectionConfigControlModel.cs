@@ -21,11 +21,13 @@ public class DatabaseConnectionConfigControlModel : HaestadUserControlModel
     #endregion
 
     #region Public Methods
-    public TestConnectionResult TestConnectionResult()
+    public TestConnectionResult TestConnection()
     {
-        var connectionResult = DataSource.Connection.TestConnection(null);
+        var connection = DatabaseConnectionControlModel.NewDatabaseDataSource().Connection;
+        var connectionResult = connection.TestConnection(null);
         Log.Information($"TestConnection result: {connectionResult.ToString()}");
 
+        connection.Dispose();
         return connectionResult;
     }
 
@@ -45,15 +47,24 @@ public class DatabaseConnectionConfigControlModel : HaestadUserControlModel
     #region Overridden Methods
     public override void Dispose()
     {
-        _dataSource?.Connection?.Close();
-        _dataSource?.Connection?.Dispose();
-        _dataSource?.Dispose();
+        DatabaseConnectionControlModel?.Dispose();
         base.Dispose();
     }
     #endregion
 
     #region Public Properties
-    public int DataSourceId { get; set; }
+    public int DataSourceId
+    {
+        get => _dataSourceId;
+        set
+        {
+            _dataSourceId = value;
+            DatabaseConnectionControlModel.DataSourceId = value;
+            SignalTransformationControlModel.DataSourceId = value;
+            SignalUnitControlModel.DataSourceId = value;
+            SignalsImportFromDatabaseControlModel.DataSourceId = value;
+        }
+    }
     public ISupportElementManager DataSourceManager => AppManager.Instance.DomainDataSet.SupportElementManager((int)SupportElementType.ScadaDataSource);
     public ISupportElement DataSourceElement => DataSourceManager.Element(DataSourceId) as ISupportElement;
 
@@ -61,30 +72,33 @@ public class DatabaseConnectionConfigControlModel : HaestadUserControlModel
     public SignalTransformationControlModel SignalTransformationControlModel { get; }
     public SignalUnitControlModel SignalUnitControlModel { get; }
     public SignalsImportFromDatabaseControlModel SignalsImportFromDatabaseControlModel { get; }
+
+
     #endregion
 
     #region Private Properties
-    private DatabaseDataSource DataSource
-    {
-        get
-        {
-            if (_dataSource == null)
-            {
-                _dataSource = (DatabaseDataSource)ScadaFactory.NewDatabaseDataSource(
-                                scadaDataSourceType: DatabaseConnectionControlModel.DatabaseDataSourceType,
-                                databaseDataSourceFormat: DatabaseConnectionControlModel.SourceFormat,
-                                dataSourcePath: DatabaseConnectionControlModel.DataFilePath);
+    //private DatabaseDataSource DataSource
+    //{
+    //    get
+    //    {
+    //        if (_dataSource == null)
+    //        {
+    //            _dataSource = (DatabaseDataSource)ScadaFactory.NewDatabaseDataSource(
+    //                            scadaDataSourceType: DatabaseConnectionControlModel.DatabaseDataSourceType,
+    //                            databaseDataSourceFormat: DatabaseConnectionControlModel.SourceFormat,
+    //                            dataSourcePath: DatabaseConnectionControlModel.DataFilePath);
 
-                if (DatabaseConnectionControlModel.UseConnectionString)
-                    _dataSource.Connection.ConnectionString = DatabaseConnectionControlModel.ConnectionString;
-            }
+    //            if (DatabaseConnectionControlModel.UseConnectionString)
+    //                _dataSource.Connection.ConnectionString = DatabaseConnectionControlModel.ConnectionString;
+    //        }
 
-            return _dataSource;
-        }
-    }
+    //        return _dataSource;
+    //    }
+    //}
     #endregion
 
     #region Private Fields
-    private DatabaseDataSource _dataSource;
+    //private DatabaseDataSource _dataSource;
+    private int _dataSourceId;
     #endregion
 }

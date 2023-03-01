@@ -32,12 +32,13 @@
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonReload = new System.Windows.Forms.ToolStripButton();
             this.treeViewTags = new System.Windows.Forms.TreeView();
             this.listViewData = new System.Windows.Forms.ListView();
             this.dateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerTo = new System.Windows.Forms.DateTimePicker();
             this.labelDateRange = new System.Windows.Forms.Label();
-            this.toolStripButtonReload = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonSelectAll = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -72,6 +73,7 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonSelectAll,
             this.toolStripButtonDelete,
             this.toolStripButtonReload});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -88,6 +90,15 @@
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
             this.toolStripButtonDelete.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonDelete.Text = "Delete checked items";
+            // 
+            // toolStripButtonReload
+            // 
+            this.toolStripButtonReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonReload.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReload.Image")));
+            this.toolStripButtonReload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonReload.Name = "toolStripButtonReload";
+            this.toolStripButtonReload.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonReload.Text = "Reload";
             // 
             // treeViewTags
             // 
@@ -145,14 +156,14 @@
             this.labelDateRange.TabIndex = 0;
             this.labelDateRange.Text = "Date Range";
             // 
-            // toolStripButtonReload
+            // toolStripButtonSelectAll
             // 
-            this.toolStripButtonReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonReload.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReload.Image")));
-            this.toolStripButtonReload.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonReload.Name = "toolStripButtonReload";
-            this.toolStripButtonReload.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonReload.Text = "Reload";
+            this.toolStripButtonSelectAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonSelectAll.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSelectAll.Image")));
+            this.toolStripButtonSelectAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSelectAll.Name = "toolStripButtonSelectAll";
+            this.toolStripButtonSelectAll.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonSelectAll.Text = "Select All";
             // 
             // PreviewSCADADataControl
             // 
@@ -184,5 +195,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
         private System.Windows.Forms.TreeView treeViewTags;
         private System.Windows.Forms.ToolStripButton toolStripButtonReload;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSelectAll;
     }
 }

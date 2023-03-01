@@ -28,7 +28,7 @@ public partial class HOPCSourceControl : HaestadUserControl
     #endregion
 
     #region Private Properties
-    public HOPCSourceControlModel HOPCSourceControlModel => 
+    public HOPCSourceControlModel HOPCSourceControlModel =>
         UserControlModel as HOPCSourceControlModel;
     #endregion
 

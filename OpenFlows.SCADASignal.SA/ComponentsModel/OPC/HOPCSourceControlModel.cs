@@ -2,7 +2,6 @@
 using Haestad.Framework.Application;
 using Haestad.SCADA.Domain.Application;
 using Haestad.Support.Support;
-using Serilog;
 
 namespace OpenFlows.SCADASignal.SA.ComponentsModel.OPC;
 
@@ -15,7 +14,7 @@ public class HOPCSourceControlModel : HaestadUserControlModel
     {
     }
     #endregion
-    
+
     #region Private Methods
     private IEditField SupportField(string fieldName)
     {
@@ -28,7 +27,8 @@ public class HOPCSourceControlModel : HaestadUserControlModel
     public ISupportElement DataSourceElement => (ISupportElement)DataSourceManager.Element(DataSourceId);
 
 
-    public new string Label {
+    public new string Label
+    {
         get => DataSourceElement.Label;
         set => DataSourceElement.Label = value;
     }
@@ -37,11 +37,13 @@ public class HOPCSourceControlModel : HaestadUserControlModel
         get => (ScadaDatasourceType)SupportField(StandardFieldName.ScadaDatasourceType).GetValue(DataSourceId);
         set => SupportField(StandardFieldName.ScadaDatasourceType).SetValue(DataSourceId, value);
     }
-    public string HostName {
+    public string HostName
+    {
         get => (string)SupportField(StandardFieldName.OPCDatasource_ComputerName).GetValue(DataSourceId);
         set => SupportField(StandardFieldName.OPCDatasource_ComputerName).SetValue(DataSourceId, value);
     }
-    public string ServerAddress {
+    public string ServerAddress
+    {
         get => (string)SupportField(StandardFieldName.OPCDatasource_Server).GetValue(DataSourceId);
         set => SupportField(StandardFieldName.OPCDatasource_Server).SetValue(DataSourceId, value);
     }

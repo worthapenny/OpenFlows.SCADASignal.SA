@@ -20,7 +20,7 @@ public partial class SignalsImportFromFileControl : HaestadUserControl
 
     #region Constructor
     public SignalsImportFromFileControl()
-    {       
+    {
         InitializeComponent();
     }
     #endregion
@@ -34,8 +34,8 @@ public partial class SignalsImportFromFileControl : HaestadUserControl
         this.buttonDeleteCurrentRawTags.Click += (s, e) => DeleteAllExistingTags();
         this.buttonImportTags.Click += (s, e) => ImportSignalsToModel();
 
-        this.inputComboBoxFieldTag.ComboBox.SelectionChangeCommitted += (s, e) => { SCADATagsImportControlModel.TagColumnName = this.inputComboBoxFieldTag.ComboBox.SelectedValue as string; EnableImportButton();};
-        this.inputComboBoxFieldLabel.ComboBox.SelectionChangeCommitted += (s, e) => { SCADATagsImportControlModel.LabelColumnName = this.inputComboBoxFieldLabel.ComboBox.SelectedValue as string; EnableImportButton();};
+        this.inputComboBoxFieldTag.ComboBox.SelectionChangeCommitted += (s, e) => { SCADATagsImportControlModel.TagColumnName = this.inputComboBoxFieldTag.ComboBox.SelectedValue as string; EnableImportButton(); };
+        this.inputComboBoxFieldLabel.ComboBox.SelectionChangeCommitted += (s, e) => { SCADATagsImportControlModel.LabelColumnName = this.inputComboBoxFieldLabel.ComboBox.SelectedValue as string; EnableImportButton(); };
         this.inputComboBoxFieldFormula.ComboBox.SelectionChangeCommitted += (s, e) => { SCADATagsImportControlModel.FormulaColumnName = this.inputComboBoxFieldFormula.ComboBox.SelectedValue as string; EnableImportButton(); };
 
         base.InitializeEvents();
@@ -65,7 +65,7 @@ public partial class SignalsImportFromFileControl : HaestadUserControl
 
         EnableImportButton();
     }
-    
+
     private void ImportSignalsToModel()
     {
         var dataTable = SCADATagsImportControlModel.GetSignalInfoTable();
@@ -76,7 +76,7 @@ public partial class SignalsImportFromFileControl : HaestadUserControl
         Log.Information(message);
         MessageBox.Show(this, message, "Tags Imported", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-        SCADATagItemsChanged?.Invoke(this, new EventArgs());
+        SCADATagItemsChanged?.Invoke(this, EventArgs.Empty);
     }
     private void DeleteAllExistingTags()
     {
@@ -86,7 +86,7 @@ public partial class SignalsImportFromFileControl : HaestadUserControl
         Log.Information(message);
         MessageBox.Show(this, message, "Delete Tags", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-        SCADATagItemsChanged?.Invoke(message, new EventArgs());
+        SCADATagItemsChanged?.Invoke(message, EventArgs.Empty);
     }
     private void EnableImportButton()
     {

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace OpenFlows.SCADASignal.SA.ComponentsModel;
 
-public class OpenWaterDatabaseModelControlModel: HaestadUserControlModel
+public class OpenWaterDatabaseModelControlModel : HaestadUserControlModel
 {
     #region Public Events
     public event EventHandler ModelOpened;
@@ -18,8 +18,8 @@ public class OpenWaterDatabaseModelControlModel: HaestadUserControlModel
 
     #region Constructor
     public OpenWaterDatabaseModelControlModel(IApplicationModel appModel)
-        :base("OpenWaterDatabaseModelControlModel", appModel)
-    {               
+        : base("OpenWaterDatabaseModelControlModel", appModel)
+    {
     }
     #endregion
 
@@ -69,7 +69,7 @@ public class OpenWaterDatabaseModelControlModel: HaestadUserControlModel
             DataSource.SetConnectionProperty(ConnectionProperty.EnableSchemaUpdate, false);
 
             DataSource.Open();
-            AppManager.Instance.DomainDataSet = DataSource.DomainDataSetManager.DomainDataSet(1); 
+            AppManager.Instance.DomainDataSet = DataSource.DomainDataSetManager.DomainDataSet(1);
 
             Log.Information($"Hydraulic model database got opened. Path: {ModelDatabaseFilePath}");
 
@@ -77,7 +77,7 @@ public class OpenWaterDatabaseModelControlModel: HaestadUserControlModel
             pi.EndTask();
 
             success = true;
-            ModelOpened?.Invoke(this, new EventArgs());
+            ModelOpened?.Invoke(this, EventArgs.Empty);
 
         }
         catch (System.Runtime.InteropServices.SEHException sehEx)
@@ -156,6 +156,6 @@ public class OpenWaterDatabaseModelControlModel: HaestadUserControlModel
 
     public IDomainDataSet DomainDataSet => AppManager.Instance.DomainDataSet;
     public IdahoDataSource DataSource { get; protected set; }
-    
+
     #endregion
 }

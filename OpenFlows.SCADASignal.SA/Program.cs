@@ -14,7 +14,7 @@ public static class Program
     static extern bool AttachConsole(int dwProcessId);
     private const int ATTACH_PARENT_PROCESS = -1;
 
-    
+
     /// <summary>
     /// The main entry point for the application.
     /// </summary>
@@ -68,5 +68,5 @@ public static class Program
         OnException(e.ExceptionObject as Exception);
     }
     #endregion
-    
+
 }

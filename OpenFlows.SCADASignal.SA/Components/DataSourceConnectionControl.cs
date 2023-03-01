@@ -3,11 +3,8 @@ using Haestad.Framework.Windows.Forms.Components;
 using Haestad.Framework.Windows.Forms.Resources;
 using Haestad.SCADA.Domain.Application;
 using Haestad.Support.Support;
-using OpenFlows.SCADASignal.SA.Components.Database;
 using OpenFlows.SCADASignal.SA.Components.Shared;
 using OpenFlows.SCADASignal.SA.ComponentsModel;
-using OpenFlows.SCADASignal.SA.ComponentsModel.Database;
-using OpenFlows.SCADASignal.SA.ComponentsModel.Shared;
 using OpenFlows.SCADASignal.SA.Support.Logging;
 using Serilog;
 using System;
@@ -45,7 +42,7 @@ public partial class DataSourceConnectionControl : HaestadUserControl
     protected override void InitializeEvents()
     {
         this.treeViewDataSources.AfterSelect += (s, e) => NodeSelectionChanged(e);
-        
+
         // Add Database Connection
         this.toolStripMenuItemDatabaseSources.Click += (s, e) =>
         {
@@ -54,6 +51,8 @@ public partial class DataSourceConnectionControl : HaestadUserControl
             AddDatabaseConnectionControl(dataSourceElement);
             AddTreeNode(dataSourceElement);
         };
+        DataSourceConnectionControlModel.DatabaseConnectionConfigControlModel.SignalsImportFromDatabaseControlModel.SignalsImported +=
+            (s, e) => { PreviewSCADADataControl.LoadTags(); };
 
 
         // Add OPC Historical Connection
@@ -105,6 +104,10 @@ public partial class DataSourceConnectionControl : HaestadUserControl
 
             this.treeViewDataSources.Nodes.Add(supportNode);
         }
+
+        // Select the first node
+        if (this.treeViewDataSources.Nodes.Count > 0)
+            this.treeViewDataSources.SelectedNode = this.treeViewDataSources.Nodes[0];
     }
     #endregion
 
@@ -117,9 +120,19 @@ public partial class DataSourceConnectionControl : HaestadUserControl
     }
     private void ClearControls()
     {
-        this.splitContainerDataSource.Panel1.Controls.Clear();
+        DisposeControl(this.tabPageImportTagsFromFile.Controls);
+        DisposeControl(this.tabPagePreview.Controls);
+
         this.tabPageImportTagsFromFile.Controls.Clear();
         this.tabPagePreview.Controls.Clear();
+        this.splitContainerDataSource.Panel1.Controls.Clear();
+    }
+    private void DisposeControl(ControlCollection controls)
+    {
+        foreach (Control control in controls)
+        {
+            control.Dispose();
+        }
     }
     private void NodeSelectionChanged(TreeViewEventArgs e)
     {
@@ -162,16 +175,16 @@ public partial class DataSourceConnectionControl : HaestadUserControl
 
         //
         // Preview SCADA Data
-        var dataPreviewControl = new PreviewSCADADataControl();
-        dataPreviewControl.Dock = DockStyle.Fill;
-        this.tabPagePreview.Controls.Add(dataPreviewControl);
-        
-        var dataPreviewControlModel = new PreviewSCADADataControlModel(AppManager.Instance.AppModel);
-        dataPreviewControlModel.DataSourceElement = GetDataSourceElement(this.treeViewDataSources.SelectedNode);
-        dataPreviewControl.LoadUserControl(dataPreviewControlModel);
-        dataPreviewControl.LoadTags();
+        PreviewSCADADataControl = new PreviewSCADADataControl();
+        PreviewSCADADataControl.Dock = DockStyle.Fill;
+        this.tabPagePreview.Controls.Add(PreviewSCADADataControl);
 
-       
+        var dataPreviewControlModel = DataSourceConnectionControlModel.PreviewSCADADataControlModel;
+        dataPreviewControlModel.DataSourceElement = GetDataSourceElement(this.treeViewDataSources.SelectedNode);
+        PreviewSCADADataControl.LoadUserControl(dataPreviewControlModel);
+        PreviewSCADADataControl.LoadTags();
+
+
         //
         // Import SCADA Tags From File Control
         var signalImporterFromFileControl = new SignalsImportFromFileControl();
@@ -179,14 +192,14 @@ public partial class DataSourceConnectionControl : HaestadUserControl
         this.tabPageImportTagsFromFile.Controls.Add(signalImporterFromFileControl);
 
         // List to signal importer from file
-        signalImporterFromFileControl.SCADATagItemsChanged += (s, e) => dataPreviewControl.LoadTags();
+        signalImporterFromFileControl.SCADATagItemsChanged += (s, e) => PreviewSCADADataControl.LoadTags();
 
         // Listen to signal importer from Db
         var signalImporterFromDb = this.DataSourceConnectionControlModel.DatabaseConnectionConfigControlModel.SignalsImportFromDatabaseControlModel;
-        if(signalImporterFromDb != null)
-            signalImporterFromDb.SignalsImported += (s, e) => dataPreviewControl.LoadTags();
+        if (signalImporterFromDb != null)
+            signalImporterFromDb.SignalsImported += (s, e) => PreviewSCADADataControl.LoadTags();
 
-        var signalImporterFromFileControlModel = new SignalsImportFromFileControlModel(AppManager.Instance.AppModel);
+        var signalImporterFromFileControlModel = DataSourceConnectionControlModel.SignalsImportFromFileControlModel;
         signalImporterFromFileControlModel.DataSourceElementId = dataSourceSupportElement.Id;
         signalImporterFromFileControl.LoadUserControl(signalImporterFromFileControlModel);
     }
@@ -242,7 +255,11 @@ public partial class DataSourceConnectionControl : HaestadUserControl
         var logFilePath = Logging.GetLogFilePath();
         Process.Start(logFilePath);
     }
-    
+
+    #endregion
+
+    #region Public Properties
+    public PreviewSCADADataControl PreviewSCADADataControl { get; private set; }
     #endregion
 
     #region Private Properties

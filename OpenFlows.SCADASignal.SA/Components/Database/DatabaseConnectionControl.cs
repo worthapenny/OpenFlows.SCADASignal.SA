@@ -61,6 +61,9 @@ public partial class DatabaseConnectionControl : HaestadUserControl
         // Timestamp
         this.inputFieldTimeStampField.TextBox.DataBindings.Add(nameof(TextBox.Text), DatabaseConnectionControlModel, nameof(DatabaseConnectionControlModel.TimestampColumnName));
 
+        // Questionable
+        DatabaseConnectionControlModel.QuestionableColumnName = string.Empty;
+
         // Custom SQL?
         this.checkBoxCustomSQL.DataBindings.Add(nameof(CheckBox.Checked), DatabaseConnectionControlModel, nameof(DatabaseConnectionControlModel.UseCustomizedSQL));
 
@@ -77,7 +80,12 @@ public partial class DatabaseConnectionControl : HaestadUserControl
         this.checkBoxCustomSQL.CheckedChanged += CheckBoxCustomSQL_CheckedChanged;
 
         base.InitializeEvents();
-    }        
+    }
+    public override void UnloadUserControl()
+    {
+        DatabaseConnectionControlModel.Dispose();
+        base.UnloadUserControl();
+    }
     #endregion
 
     #region Event Handlers

@@ -24,21 +24,28 @@ public class PreviewSCADADataControlModel : HaestadUserControlModel
     #region Public Methods
     public List<SCADASignalElement> GetSCADASignalElements()
     {
-        var elements = new List<SCADASignalElement>();
-        var manager = AppManager.Instance.DomainDataSet.SupportElementManager((int)SupportElementType.ScadaSignal);
+        var signalElements = new List<SCADASignalElement>();
+        var signalManager = AppManager.Instance.DomainDataSet.SupportElementManager((int)SupportElementType.ScadaSignal);
 
-        var dataSourceField = manager.SupportElementField(StandardFieldName.ScadaSignal_ScadaDatasourceID);
-        var tagField = manager.SupportElementField(StandardFieldName.ScadaSignal_SignalLabel);
-        var isDerivedField = manager.SupportElementField(StandardFieldName.ScadaSignal_isDerived);
-        var formulaField = manager.SupportElementField(StandardFieldName.FormulaTransform_FormulaText);
+        var dataSourceField = signalManager.SupportElementField(StandardFieldName.ScadaSignal_ScadaDatasourceID);
+        var tagField = signalManager.SupportElementField(StandardFieldName.ScadaSignal_SignalLabel);
+        var isDerivedField = signalManager.SupportElementField(StandardFieldName.ScadaSignal_isDerived);
+        var formulaField = signalManager.SupportElementField(StandardFieldName.FormulaTransform_FormulaText);
 
-        foreach (var element in manager.Elements())
+        foreach (var element in signalManager.Elements())
         {
-            var dataSourceId = (int)dataSourceField.GetValue(element.Id);
+            var fieldValue = dataSourceField.GetValue(element.Id);
+            if (fieldValue == null)
+            {
+                Log.Error($"The data source id filed value is null, which it should not be. Skipped {element.Id}: {element.Label}. [Signal Manager's Element]");
+                continue;
+            }
+
+            var dataSourceId = (int)fieldValue;
             if (dataSourceId != DataSourceElement.Id)
                 continue;
 
-            elements.Add(
+            signalElements.Add(
                 new SCADASignalElement(
                     id: element.Id,
                     label: element.Label,
@@ -52,8 +59,8 @@ public class PreviewSCADADataControlModel : HaestadUserControlModel
 
         }
 
-        Log.Information($"'{elements.Count}' number of SCADA signals found on {DataSourceElement.Label} in water model.");
-        return elements;
+        Log.Information($"'{signalElements.Count}' number of SCADA signals found on {DataSourceElement.Label} in water model.");
+        return signalElements;
     }
     public List<ISignalValue> GetSCADAData(SCADASignalElement signal)
     {

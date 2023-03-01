@@ -10,9 +10,9 @@ public partial class SCADASignalsParentForm : HaestadForm
 {
     #region Constructor
     public SCADASignalsParentForm(SCADASignalsParentFormModel formModel)
-        :base(formModel)
+        : base(formModel)
     {
-        InitializeComponent();           
+        InitializeComponent();
     }
     #endregion
 
@@ -60,7 +60,7 @@ public partial class SCADASignalsParentForm : HaestadForm
     #region Private Properties
     private SCADASignalsParentFormModel ParentFormModel =>
         FormModel as SCADASignalsParentFormModel;
-    
+
     #endregion
 
 }

@@ -4,6 +4,7 @@ using OpenFlows.SCADASignal.SA.Components.Database;
 using OpenFlows.SCADASignal.SA.Components.OPC;
 using OpenFlows.SCADASignal.SA.ComponentsModel.Database;
 using OpenFlows.SCADASignal.SA.ComponentsModel.OPC;
+using OpenFlows.SCADASignal.SA.ComponentsModel.Shared;
 using Serilog;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ public class DataSourceConnectionControlModel : HaestadUserControlModel
     {
         DatabaseConnectionConfigControlModel = new DatabaseConnectionConfigControlModel(appModel);
         HOPCConnectionConfigControlModel = new HOPCConnectionConfigControlModel(appModel);
+        PreviewSCADADataControlModel = new PreviewSCADADataControlModel(appModel);
+        SignalsImportFromFileControlModel = new SignalsImportFromFileControlModel(appModel);
     }
     #endregion
 
@@ -73,7 +76,7 @@ public class DataSourceConnectionControlModel : HaestadUserControlModel
         control.SignalUnitControl.LoadUserControl(DatabaseConnectionConfigControlModel.SignalUnitControlModel);
         control.SignalTransformationControl.LoadUserControl(DatabaseConnectionConfigControlModel.SignalTransformationControlModel);
         control.SignalsImportFromDatabaseControl.LoadUserControl(DatabaseConnectionConfigControlModel.SignalsImportFromDatabaseControlModel);
-        
+
 
         Log.Debug($"Database connection control loaded");
         return control;
@@ -83,11 +86,18 @@ public class DataSourceConnectionControlModel : HaestadUserControlModel
     {
         return this.SupportManager.Elements().Cast<ISupportElement>();
     }
+    public override void Dispose()
+    {
+        DatabaseConnectionConfigControlModel.Dispose();
+        base.Dispose();
+    }
     #endregion
 
     #region Public Properties
     public DatabaseConnectionConfigControlModel DatabaseConnectionConfigControlModel { get; }
     public HOPCConnectionConfigControlModel HOPCConnectionConfigControlModel { get; }
+    public PreviewSCADADataControlModel PreviewSCADADataControlModel { get; }
+    public SignalsImportFromFileControlModel SignalsImportFromFileControlModel { get; }
     #endregion
 
     #region Private Properties

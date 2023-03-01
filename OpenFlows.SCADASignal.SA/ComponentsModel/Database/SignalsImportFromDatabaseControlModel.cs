@@ -1,4 +1,5 @@
-﻿using Haestad.Framework.Application;
+﻿using Haestad.Domain;
+using Haestad.Framework.Application;
 using Haestad.SCADA.Domain;
 using Haestad.SCADA.Domain.Application;
 using OpenFlows.SCADASignal.SA.ComponentsModel.Shared;
@@ -30,7 +31,7 @@ public class SignalsImportFromDatabaseControlModel : HaestadUserControlModel
         importer.DataSourceElementId = DataSourceId;
         var importCount = importer.AppendNewRawScadaTags(signals);
 
-        SignalsImported?.Invoke(this, new EventArgs());
+        SignalsImported?.Invoke(this, EventArgs.Empty);
         return importCount;
     }
 
@@ -46,12 +47,16 @@ public class SignalsImportFromDatabaseControlModel : HaestadUserControlModel
             signalList = signals.ToList();
 
         Log.Information($"Found '{signalList.Count}' number of signals on the database.");
+
+        scadaAdapter.CloseScadaDataSource(DataSourceId);
         return signalList;
     }
     #endregion
 
     #region Public Propertise
     public int DataSourceId { get; set; }
+    public ISupportElementManager ScadaDataSourceManager => AppManager.Instance.DomainDataSet?.SupportElementManager((int)SupportElementType.ScadaDataSource) ?? null;
+    public ISupportElement DataSourceElement => (ISupportElement)ScadaDataSourceManager.Element(DataSourceId);
     //public DatabaseConnectionControlModel DatabaseConnectionControlModel { get; set; }
 
     #endregion

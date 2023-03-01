@@ -6,14 +6,16 @@ public class SCADASignalApplicationModel : ApplicationModelBase
 {
     #region Constructor
     public SCADASignalApplicationModel(object[] args)
-        :base(args)
-    {            
+        : base(args)
+    {
     }
     #endregion
 
     #region Public Properties
 
-    public override IApplicationDescription Description { get
+    public override IApplicationDescription Description
+    {
+        get
         {
             if (_description == null) _description = new SCADASignalApplicationDescription();
             return _description;

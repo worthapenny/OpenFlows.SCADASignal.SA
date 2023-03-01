@@ -49,21 +49,21 @@ public partial class SignalUnitControl : HaestadUserControl
         this.buttonInitialize.Click += (s, e) =>
         {
             var unitSystemIndex = (UnitConversionManager.UnitSystemIndex)this.inputComboBoxFieldUnitSystem.ComboBox.SelectedValue;
-            InitializeFieldByUnitSystemIndex(unitSystemIndex);  
+            InitializeFieldByUnitSystemIndex(unitSystemIndex);
         };
 
         if (SignalUnitControlModel.DataSourceId > 0)
         {
-            this.inputComboBoxFieldConcentration.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.ConcentrationUnit = GetUnitIndex(this.inputComboBoxFieldConcentration.ComboBox);
-            this.inputComboBoxFieldDemand.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.DemandUnit = GetUnitIndex(this.inputComboBoxFieldDemand.ComboBox);
-            this.inputComboBoxFieldFlow.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.FlowUnit = GetUnitIndex(this.inputComboBoxFieldFlow.ComboBox);
-            this.inputComboBoxFieldFlowSetting.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.FlowSettingUnit = GetUnitIndex(this.inputComboBoxFieldFlowSetting.ComboBox);
+            this.inputComboBoxFieldConcentration.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.ConcentrationUnitIndex = GetUnitIndex(this.inputComboBoxFieldConcentration.ComboBox);
+            this.inputComboBoxFieldDemand.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.DemandUnitIndex = GetUnitIndex(this.inputComboBoxFieldDemand.ComboBox);
+            this.inputComboBoxFieldFlow.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.FlowUnitIndex = GetUnitIndex(this.inputComboBoxFieldFlow.ComboBox);
+            this.inputComboBoxFieldFlowSetting.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.FlowSettingUnitIndex = GetUnitIndex(this.inputComboBoxFieldFlowSetting.ComboBox);
             this.inputComboBoxFieldHG.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.HydraulicGradeUnitIndex = GetUnitIndex(this.inputComboBoxFieldHG.ComboBox);
-            this.inputComboBoxFieldHGS.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.HydraulicGradeSettingUnit = GetUnitIndex(this.inputComboBoxFieldHGS.ComboBox);
-            this.inputComboBoxFieldLevel.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.LevelUnit = GetUnitIndex(this.inputComboBoxFieldLevel.ComboBox);
-            this.inputComboBoxFieldPower.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.PowerUnit = GetUnitIndex(this.inputComboBoxFieldPower.ComboBox);
-            this.inputComboBoxFieldPressure.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.PressureUnit = GetUnitIndex(this.inputComboBoxFieldPressure.ComboBox);
-            this.inputComboBoxFieldRelativeClosure.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.RelativeClosureUnit = GetUnitIndex(this.inputComboBoxFieldRelativeClosure.ComboBox);
+            this.inputComboBoxFieldHGS.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.HydraulicGradeSettingUnitIndex = GetUnitIndex(this.inputComboBoxFieldHGS.ComboBox);
+            this.inputComboBoxFieldLevel.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.LevelUnitIndex = GetUnitIndex(this.inputComboBoxFieldLevel.ComboBox);
+            this.inputComboBoxFieldPower.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.PowerUnitIndex = GetUnitIndex(this.inputComboBoxFieldPower.ComboBox);
+            this.inputComboBoxFieldPressure.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.PressureUnitIndex = GetUnitIndex(this.inputComboBoxFieldPressure.ComboBox);
+            this.inputComboBoxFieldRelativeClosure.ComboBox.SelectedValueChanged += (s, e) => SignalUnitControlModel.RelativeClosureUnitIndex = GetUnitIndex(this.inputComboBoxFieldRelativeClosure.ComboBox);
         }
 
         base.InitializeEvents();
@@ -73,16 +73,16 @@ public partial class SignalUnitControl : HaestadUserControl
         if (SignalUnitControlModel.DataSourceId > 0)
         {
             var unitManager = UnitConversionManager.Current;
-            this.inputComboBoxFieldConcentration.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.ConcentrationUnit);
-            this.inputComboBoxFieldDemand.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.DemandUnit);
-            this.inputComboBoxFieldFlow.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.FlowUnit);
-            this.inputComboBoxFieldFlowSetting.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.FlowSettingUnit);
+            this.inputComboBoxFieldConcentration.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.ConcentrationUnitIndex);
+            this.inputComboBoxFieldDemand.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.DemandUnitIndex);
+            this.inputComboBoxFieldFlow.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.FlowUnitIndex);
+            this.inputComboBoxFieldFlowSetting.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.FlowSettingUnitIndex);
             this.inputComboBoxFieldHG.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.HydraulicGradeUnitIndex);
-            this.inputComboBoxFieldHGS.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.HydraulicGradeSettingUnit);
-            this.inputComboBoxFieldLevel.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.LevelUnit);
-            this.inputComboBoxFieldPower.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.PowerUnit);
-            this.inputComboBoxFieldPressure.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.PressureUnit);
-            this.inputComboBoxFieldRelativeClosure.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.RelativeClosureUnit);
+            this.inputComboBoxFieldHGS.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.HydraulicGradeSettingUnitIndex);
+            this.inputComboBoxFieldLevel.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.LevelUnitIndex);
+            this.inputComboBoxFieldPower.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.PowerUnitIndex);
+            this.inputComboBoxFieldPressure.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.PressureUnitIndex);
+            this.inputComboBoxFieldRelativeClosure.ComboBox.SelectedItem = unitManager.UnitAt(SignalUnitControlModel.RelativeClosureUnitIndex);
         }
     }
     #endregion

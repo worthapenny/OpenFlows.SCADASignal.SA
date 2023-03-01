@@ -30,7 +30,7 @@ namespace OpenFlows.SCADASignal.SA.Components.Database
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelDbConnectionFilePathOrConnectionString = new System.Windows.Forms.Label();
+            this.labelDbConnectionConnectionString = new System.Windows.Forms.Label();
             this.richTextBoxDbConnectionConnectionString = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.richTextBoxAvailableSignals = new System.Windows.Forms.RichTextBox();
@@ -53,14 +53,14 @@ namespace OpenFlows.SCADASignal.SA.Components.Database
             this.inputFieldDbConnectionDateTimeDelimiter = new OpenFlows.SCADASignal.SA.Components.Support.InputField();
             this.SuspendLayout();
             // 
-            // labelDbConnectionFilePathOrConnectionString
+            // labelDbConnectionConnectionString
             // 
-            this.labelDbConnectionFilePathOrConnectionString.AutoSize = true;
-            this.labelDbConnectionFilePathOrConnectionString.Location = new System.Drawing.Point(3, 84);
-            this.labelDbConnectionFilePathOrConnectionString.Name = "labelDbConnectionFilePathOrConnectionString";
-            this.labelDbConnectionFilePathOrConnectionString.Size = new System.Drawing.Size(146, 13);
-            this.labelDbConnectionFilePathOrConnectionString.TabIndex = 1;
-            this.labelDbConnectionFilePathOrConnectionString.Text = "File path or Connection String";
+            this.labelDbConnectionConnectionString.AutoSize = true;
+            this.labelDbConnectionConnectionString.Location = new System.Drawing.Point(3, 84);
+            this.labelDbConnectionConnectionString.Name = "labelDbConnectionConnectionString";
+            this.labelDbConnectionConnectionString.Size = new System.Drawing.Size(91, 13);
+            this.labelDbConnectionConnectionString.TabIndex = 1;
+            this.labelDbConnectionConnectionString.Text = "Connection String";
             // 
             // richTextBoxDbConnectionConnectionString
             // 
@@ -290,7 +290,7 @@ namespace OpenFlows.SCADASignal.SA.Components.Database
             this.Controls.Add(this.richTextBoxAvailableSignals);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.richTextBoxDbConnectionConnectionString);
-            this.Controls.Add(this.labelDbConnectionFilePathOrConnectionString);
+            this.Controls.Add(this.labelDbConnectionConnectionString);
             this.Controls.Add(this.inputFieldTimeStampField);
             this.Controls.Add(this.inputFieldValueField);
             this.Controls.Add(this.inputFieldTagField);
@@ -309,7 +309,7 @@ namespace OpenFlows.SCADASignal.SA.Components.Database
         #endregion
 
         private InputField inputFieldDbConnectionDateTimeDelimiter;
-        private System.Windows.Forms.Label labelDbConnectionFilePathOrConnectionString;
+        private System.Windows.Forms.Label labelDbConnectionConnectionString;
         private System.Windows.Forms.RichTextBox richTextBoxDbConnectionConnectionString;
         private Separator separatorDbStructure;
         private InputField inputFieldTable;

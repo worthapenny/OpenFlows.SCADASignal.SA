@@ -33,7 +33,7 @@ public static class Logging
         }
 
 #if DEBUG
-            logEventLevel = LogEventLevel.Debug;
+        logEventLevel = LogEventLevel.Debug;
 #endif
 
 

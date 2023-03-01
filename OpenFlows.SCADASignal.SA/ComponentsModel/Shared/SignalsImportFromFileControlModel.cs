@@ -153,7 +153,7 @@ public class SignalsImportFromFileControlModel : HaestadUserControlModel
     public ISupportElementManager SignalManager
         => DomainDataSet.SupportElementManager((int)SupportElementType.ScadaSignal);
     public ISupportElement DataSourceElement => (ISupportElement)SignalManager.Element(DataSourceElementId);
-    
+
     public IDomainDataSet DomainDataSet => AppManager.Instance.DomainDataSet;
 
 
