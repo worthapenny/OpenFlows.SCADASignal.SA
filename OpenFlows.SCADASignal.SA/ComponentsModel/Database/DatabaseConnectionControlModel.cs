@@ -52,8 +52,16 @@ public class DatabaseConnectionControlModel : HaestadUserControlModel
             if (File.Exists(DataFilePath))
                 dataSource.Connection.RebuildConnectionString();
 
+            //dataSource.Connection.ConnectionString = dataSource.Connection.conn
+
             //if (UseConnectionString && !string.IsNullOrEmpty(ConnectionString))
             //    dataSource.Connection.ConnectionString = ConnectionString;
+        }
+
+        if(DatabaseDataSourceType == DatabaseDataSourceType.OleDbConnection
+            || DatabaseDataSourceType == DatabaseDataSourceType.OdbcConnection)
+        {
+            dataSource.Connection.ConnectionString = ConnectionString;
         }
 
         return dataSource;

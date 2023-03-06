@@ -266,7 +266,7 @@ namespace OpenFlows.SCADASignal.SA.Test
 
 
             //
-            // Add New DB Data Source
+            // Add New DB Data Source [Excel]
             // 
             #region Add new DB Data Source
             var dataSourceElement = dbConnConfigModel.AddSource();
@@ -348,6 +348,173 @@ namespace OpenFlows.SCADASignal.SA.Test
 
             #endregion
 
+
+
+            //
+            // Add New DB Data Source [OLEDB]
+            // 
+            #region Add new DB Data Source
+            dataSourceElement = dbConnConfigModel.AddSource();
+            dataSourceId = dataSourceElement.Id;
+            Assert.That(dataSourceElement, Is.Not.Null);
+
+            dbConnConfigModel.DataSourceId = dataSourceId;
+
+            // Database Source
+            dbSource = dbConnConfigModel.DatabaseConnectionControlModel;
+            dbSource.DataSourceType = ScadaDatasourceType.Database;
+            dbSource.DatabaseDataSourceType = DatabaseDataSourceType.OleDbConnection;
+            dbSource.ConnectionString =@"provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Program Files (x86)\Bentley\WaterGEMS\Samples\Example5_SCADA.xls;Extended Properties=""Excel 8.0;HDR=Yes;"";";
+            dbSource.QueryDateTimeDelimiter = "#";
+            dbSource.TableName = "'SCADA Data$'";
+            dbSource.SourceFormat = DatabaseDataSourceFormat.OneValuePerRow;
+            dbSource.SignalColumnName = "Signal Name";
+            dbSource.ValueColumnName = "Data Value";
+            dbSource.TimestampColumnName = "DateTime";
+            dbSource.IsRealTime = false;
+            dbSource.IsHistorical = true;
+            dbSource.TimeToleranceBackwardInMinutes = 10;
+            dbSource.TimeToleranceForwardInMinutes = 10;
+            dbSource.IsZeroGoodQuality = false;
+            dbSource.UseCustomizedSQL = false;
+
+            // Test connection
+            Assert.That(dbConnConfigModel.TestConnection(), Is.EqualTo(TestConnectionResult.ConnectionOK));
+
+            // Units
+            units = dbConnConfigModel.SignalUnitControlModel;
+            Assert.That(units, Is.Not.Null);
+
+            units.HydraulicGradeUnitIndex = UnitIndex.Meters;
+            units.PressureUnitIndex = UnitIndex.PSI;
+            units.LevelUnitIndex = UnitIndex.Meters;
+            units.DemandUnitIndex = UnitIndex.LitersPerSecond;
+            units.FlowUnitIndex = UnitIndex.LitersPerSecond;
+            units.FlowSettingUnitIndex = UnitIndex.LitersPerSecond;
+            units.HydraulicGradeSettingUnitIndex = UnitIndex.Meters;
+            units.ConcentrationUnitIndex = UnitIndex.MilligramsPerLiter;
+            units.RelativeClosureUnitIndex = UnitIndex.PercentPercent;
+            units.PowerUnitIndex = UnitIndex.Kilowatts;
+
+            // Signal Value Mapping
+            //--
+
+
+            // Data Preview [There is nothing in the model hence it should be zero at the moment]
+            previewModel = dataSourceControlModel.PreviewSCADADataControlModel;
+            previewModel.DataSourceElement = dataSourceManager.Element(dataSourceId) as ISupportElement;
+            signalsInModel = previewModel.GetSCADASignalElements();
+            Assert.That(signalsInModel.Count, Is.EqualTo(0));
+
+
+            // Load total number of available tags
+            signals = dbConnConfigModel.SignalsImportFromDatabaseControlModel.LoadSignalsFromDatabase();
+            Assert.That(signals.Count, Is.EqualTo(8));
+
+
+            // import 
+            newSignals = signals.Select(s => new SCADASignalInfo(s.Name, s.Label)).ToList();
+            dbConnConfigModel.SignalsImportFromDatabaseControlModel.AppendSignals(newSignals);
+
+            // Data Preview [There should be something in the model now due to import]            
+            signalsInModel = previewModel.GetSCADASignalElements();
+            Assert.That(signalsInModel.Count, Is.EqualTo(8));
+
+            // validate SCADA data
+            previewModel.StartDateTime = new DateTime(2000, 1, 1);
+            previewModel.EndDateTime = DateTime.Today;
+            signal = signalsInModel.Where(s => s.SCADATag == "T1 HGL").First();
+            data = previewModel.GetSCADAData(signal);
+            Assert.That(data.Count, Is.EqualTo(25));
+
+            Assert.That(data.First().Value, Is.EqualTo(177.0));
+            Assert.That(data.Last().Value, Is.EqualTo(176.30));
+
+            #endregion
+
+
+
+            //
+            // Add New DB Data Source [ODBC]
+            // 
+            #region Add new DB Data Source
+            dataSourceElement = dbConnConfigModel.AddSource();
+            dataSourceId = dataSourceElement.Id;
+            Assert.That(dataSourceElement, Is.Not.Null);
+
+            dbConnConfigModel.DataSourceId = dataSourceId;
+
+            // Database Source
+            dbSource = dbConnConfigModel.DatabaseConnectionControlModel;
+            dbSource.DataSourceType = ScadaDatasourceType.Database;
+            dbSource.DatabaseDataSourceType = DatabaseDataSourceType.OdbcConnection;
+            dbSource.ConnectionString = @"Driver={Microsoft Excel Driver (*.xls, *.xlsx, *.xlsm, *.xlsb)};DBQ=C:\Program Files (x86)\Bentley\WaterGEMS\Samples\Example5_SCADA.xls;";
+            dbSource.QueryDateTimeDelimiter = "#";
+            dbSource.TableName = "'SCADA Data$'";
+            dbSource.SourceFormat = DatabaseDataSourceFormat.OneValuePerRow;
+            dbSource.SignalColumnName = "Signal Name";
+            dbSource.ValueColumnName = "Data Value";
+            dbSource.TimestampColumnName = "DateTime";
+            dbSource.IsRealTime = false;
+            dbSource.IsHistorical = true;
+            dbSource.TimeToleranceBackwardInMinutes = 10;
+            dbSource.TimeToleranceForwardInMinutes = 10;
+            dbSource.IsZeroGoodQuality = false;
+            dbSource.UseCustomizedSQL = false;
+
+            // Test connection
+            Assert.That(dbConnConfigModel.TestConnection(), Is.EqualTo(TestConnectionResult.ConnectionOK));
+
+            // Units
+            units = dbConnConfigModel.SignalUnitControlModel;
+            Assert.That(units, Is.Not.Null);
+
+            units.HydraulicGradeUnitIndex = UnitIndex.Meters;
+            units.PressureUnitIndex = UnitIndex.PSI;
+            units.LevelUnitIndex = UnitIndex.Meters;
+            units.DemandUnitIndex = UnitIndex.LitersPerSecond;
+            units.FlowUnitIndex = UnitIndex.LitersPerSecond;
+            units.FlowSettingUnitIndex = UnitIndex.LitersPerSecond;
+            units.HydraulicGradeSettingUnitIndex = UnitIndex.Meters;
+            units.ConcentrationUnitIndex = UnitIndex.MilligramsPerLiter;
+            units.RelativeClosureUnitIndex = UnitIndex.PercentPercent;
+            units.PowerUnitIndex = UnitIndex.Kilowatts;
+
+            // Signal Value Mapping
+            //--
+
+
+            // Data Preview [There is nothing in the model hence it should be zero at the moment]
+            previewModel = dataSourceControlModel.PreviewSCADADataControlModel;
+            previewModel.DataSourceElement = dataSourceManager.Element(dataSourceId) as ISupportElement;
+            signalsInModel = previewModel.GetSCADASignalElements();
+            Assert.That(signalsInModel.Count, Is.EqualTo(0));
+
+
+            // Load total number of available tags
+            signals = dbConnConfigModel.SignalsImportFromDatabaseControlModel.LoadSignalsFromDatabase();
+            Assert.That(signals.Count, Is.EqualTo(8));
+
+
+            // import 
+            newSignals = signals.Select(s => new SCADASignalInfo(s.Name, s.Label)).ToList();
+            dbConnConfigModel.SignalsImportFromDatabaseControlModel.AppendSignals(newSignals);
+
+            // Data Preview [There should be something in the model now due to import]            
+            signalsInModel = previewModel.GetSCADASignalElements();
+            Assert.That(signalsInModel.Count, Is.EqualTo(8));
+
+            // validate SCADA data
+            previewModel.StartDateTime = new DateTime(2000, 1, 1);
+            previewModel.EndDateTime = DateTime.Today;
+            signal = signalsInModel.Where(s => s.SCADATag == "T1 HGL").First();
+            data = previewModel.GetSCADAData(signal);
+            Assert.That(data.Count, Is.EqualTo(25));
+
+            Assert.That(data.First().Value, Is.EqualTo(177.0));
+            Assert.That(data.Last().Value, Is.EqualTo(176.30));
+
+            #endregion
 
             // Clean up
             dataSourceControlModel.Dispose();
